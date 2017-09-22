@@ -52,13 +52,12 @@ void operatorControl() {
 			X1 = 0;
 		}
 
-
-		motorSet(1,)
-		motorSet(2,)
-		motorSet(5,)
-		motorSet(6,)
-		motorSet(9,)
-		motorSet(10,)
+		motorSet(1,1)
+		motorSet(2,1)
+		motorSet(5,2)
+		motorSet(6,3)
+		motorSet(9,3)
+		motorSet(10,3)
 
 		delay(20);
 	}
