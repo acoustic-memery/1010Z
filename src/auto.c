@@ -25,6 +25,211 @@
  *
  * The autonomous task may exit, unlike operatorControl() which should never exit. If it does
  * so, the robot will await a switch to another mode or disable/enable cycle.
- */
+ */#define FOREWARD 1
+#define BACKWARDS 2
+#define RIGHT 1
+#define LEFT 2
+#define UP 1
+#define DOWN 2
+#define OPEN 1
+#define CLOSED 2
+
+
+void motorsForeward (float output) {
+
+}
+
+void motorsBackward (float output) {
+
+}
+
+void motorsRight () {
+
+}
+
+void motorsLeft () {
+
+}
+
+void motorsStop () {
+
+}
+
+
+
+
+
+
+
+
+
+
+void stopEverything() {
+    motorsStop();
+  }
+
+  #define INTEGRAL 1
+  #define DERIVATIVE 0.0
+
+
+  void go(int way, int distance) {
+    encoderReset(driveEncLeft);
+    encoderReset(driveEncRight);
+
+    float encTickLastLeft;
+    float encTickLastRight; //tick last left and right
+
+
+    float outputLeft;
+    float outputRight; //power to be outputed left and right
+
+    float errLeft;
+    float errRight; //target distance - actual distance left and right
+
+    float errTotalRight;
+    float errTotalLeft; //total accumulated error left and right
+
+    int errAccuLeft = 50;
+    int errAccuRight = 50; //total accumulated error left and right if
+less than integral cap
+
+    float gain = 0.25; //motor gain for proportional term
+
+    float integCap = 50/INTEGRAL; //integral cap
+
+    float propLeft;
+    float propRight; //calculated proportional term left and right
+    float integLeft;
+    float integRight; //calculated integral term left and right
+    float derivLeft;
+    float derivRight; //calculated derivative term left and right
+
+    int motorAdjust = 5; //motor adjustment amount
+
+
+
+    while(((abs(encoderGet(driveEncLeft)) +
+(abs(encoderGet(driveEncRight)))) / 2) < distance) { //while less than
+target distance
+
+
+
+       errLeft = distance - (abs(encoderGet(driveEncLeft)));
+       errRight = distance - (abs(encoderGet(driveEncRight)));
+//calculate error
+
+       if(errRight < errAccuRight) {errTotalRight += errRight;}
+       else {errTotalRight = 0;}
+
+       if(errLeft < errAccuLeft) {
+         errTotalLeft += errLeft;}
+       else {errTotalLeft = 0;} //makes integral term 0 if error is less
+than 50 (this has not been properly tuned)
+
+       if(errTotalLeft > integCap) {
+         errTotalLeft = 50/INTEGRAL;
+       }
+
+       if(errTotalRight > integCap) {
+         errTotalRight = 50/INTEGRAL; //if integral term is greater than
+50 (after previous calculation) integral term is incorperated
+       }
+
+//the above part of the function is only for managing when the integral
+is enganged
+
+       propLeft = errLeft * gain;
+       propRight = errRight * gain; //calculate proprtional term
+
+       integLeft = errTotalLeft * INTEGRAL;
+       integRight = errTotalRight * INTEGRAL; //calculate integral term
+
+       derivLeft = (errLeft - encTickLastLeft) * DERIVATIVE;
+       derivRight = (errRight - encTickLastRight) * DERIVATIVE;
+//calculate derivative term
+
+encTickLastRight = errRight;
+encTickLastLeft = errLeft; //calculate enctick last
+
+outputLeft = propLeft + integLeft + derivLeft;
+outputRight = propRight + integRight + derivRight; //output P + I + D
+for both sides
+
+if (outputLeft > 127) {
+   outputLeft = 127;
+}
+
+if (outputRight > 127) {
+   outputRight = 127;
+}
+
+//make output 127 if greater than 127
+
+if(way == 1) {
+//if forewards
+
+//adjusts motors to make both sides turn at approx the same speed
+
+   if (outputLeft < (outputRight +- 20)) {
+     motorSet(1, (outputLeft + motorAdjust));
+     motorSet(4, -(outputLeft + motorAdjust)); // left side
+
+     motorSet(7, outputRight);
+     motorSet(10, -(outputRight)); //right side
+   }
+   if (outputRight < (outputLeft +- 20)) {
+     motorSet(1, (outputLeft));
+     motorSet(4, -(outputLeft)); // left side
+
+     motorSet(7, (outputRight + motorAdjust));
+     motorSet(10, -(outputRight + motorAdjust));
+
+   }
+   else {
+     motorSet(1, outputLeft);
+     motorSet(4, -(outputLeft));
+     motorSet(7, (outputRight));
+     motorSet(10, -(outputRight));
+   }
+
+}
+
+if(way == 2) {
+//backwards
+
+//adjusts motors to keep both sides the same speed
+   if (outputLeft < (outputRight +- 20)) {
+     motorSet(1, -(outputLeft + motorAdjust));
+     motorSet(4, (outputLeft + motorAdjust)); // left side
+
+     motorSet(7, -(outputRight));
+     motorSet(10, (outputRight)); //right side
+   }
+   if (outputRight < (outputLeft +- 20)) {
+     motorSet(1, -(outputLeft));
+     motorSet(4, (outputLeft)); // left side
+
+     motorSet(7, -(outputRight + motorAdjust));
+     motorSet(10, (outputRight + motorAdjust));
+
+   }
+   else {
+     motorSet(1, -(outputLeft));
+     motorSet(4, (outputLeft));
+     motorSet(7, -(outputRight));
+     motorSet(10, (outputRight));
+   }
+
+
+}
+
+
+delay(20);
+
+    }
+
+
+
+  }
 void autonomous() {
 }
