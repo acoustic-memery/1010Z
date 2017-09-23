@@ -22,6 +22,76 @@
  */
 void initializeIO() {
 }
+void lcdTask (void * parameter) {
+int selection = 1;
+
+   lcdInit(uart1);
+   lcdClear(uart1);
+
+   int autoId[] = {1, 2, 3, 4, 5};
+
+     int counter = 0;
+     lcdSetText(uart1, 2, "<      OK      >");
+     while (selection == 1) {
+         if (lcdReadButtons(uart1) == 4) {
+             counter++;
+             // lcdPrint(uart1, 1, "UP %d", counter);
+         } else if (lcdReadButtons(uart1) == 1) {
+             counter--;
+             // lcdPrint(uart1, 1, "DOWN %d", counter);
+         }
+
+         if (autoId[counter] == 1) {
+             lcdPrint(uart1, 1, "LOAD: Skills");
+         } else if (autoId[counter] == 2) {
+             lcdPrint(uart1, 1, "LOAD: Comp LS");
+         } else if (autoId[counter] == 3) {
+             lcdPrint(uart1, 1, "LOAD: Comp RS");
+         } else if (autoId[counter] == 4) {
+             lcdPrint(uart1, 1, "LOAD: ");
+         } else if (autoId[counter] == 5) {
+             lcdPrint(uart1, 1, "LOAD: ");
+         }
+
+
+         if (lcdReadButtons(uart1) == 2) {
+             if (autoId[counter] == 1) {
+                 program = 1;
+         selection = 2;
+         lcdClear(uart1);
+         lcdPrint(uart1, 1, " confirmed");
+                 break;
+             } else if (autoId[counter] == 2) {
+                 program = 2;
+         selection = 2;
+         lcdClear(uart1);
+         lcdPrint(uart1, 1, " confirmed");
+         break;
+             } else if (autoId[counter] == 3) {
+                 program = 3;
+         selection = 2;
+         lcdClear(uart1);
+         lcdPrint(uart1, 1, " confirmed");
+                 break;
+             } else if (autoId[counter] == 4) {
+                 program = 4;
+         selection = 2;
+         lcdClear(uart1);
+         lcdPrint(uart1, 1, " confirmed");
+                 break;
+             } else if (autoId[counter] == 5) {
+                 program = 5;
+         selection = 2;
+         lcdClear(uart1);
+         lcdPrint(uart1, 1, " confirmed");
+                 break;
+             } else {
+                 continue;
+             }
+         }
+
+         delay(150);
+     }
 
 /*
  * Runs user initialization code. This function will be started in its own task with the default
@@ -37,4 +107,6 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
+  driveEncLeft = (encoderInit(6, 7, false));
+ driveEncRight = (encoderInit(9, 8, false));
 }
