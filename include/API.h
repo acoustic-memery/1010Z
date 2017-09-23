@@ -30,11 +30,11 @@
 #define API_H_
 
 // System includes
-<<<<<<< HEAD
-#include <stdlib.h>
-=======
 
->>>>>>> 37e114cd2c842f7403bafcac2b0a66841b72b96e
+#include <stdlib.h>
+
+
+
 #include <stdbool.h>
 #include <stdarg.h>
 #include <stdint.h>
@@ -759,7 +759,7 @@ typedef int PROS_FILE;
 
 #ifndef FILE
 /**
- * For convenience, FILE is defined as PROS_FILE if it wasn't already defined. This provides 
+ * For convenience, FILE is defined as PROS_FILE if it wasn't already defined. This provides
  * backwards compatability with PROS, but also allows libraries such as newlib to be incorporated
  * into PROS projects. If you're not using C++/newlib, you can disregard this and just use FILE.
  */
