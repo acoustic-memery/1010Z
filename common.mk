@@ -21,8 +21,11 @@ MCUPREPARE=$(OBJCOPY) $(OUT) -O binary $(BINDIR)/$(OUTBIN)
 SIZEFLAGS=
 # Uploads program using java
 UPLOAD=@java -jar firmware/uniflash.jar vex $(BINDIR)/$(OUTBIN)
+<<<<<<< HEAD
 # Flashes program using the PROS CLI flash command
 FLASH=pros flash -f $(BINDIR)/$(OUTBIN)
+=======
+>>>>>>> 37e114cd2c842f7403bafcac2b0a66841b72b96e
 
 # Advanced options
 ASMEXT=s

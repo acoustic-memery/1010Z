@@ -30,7 +30,39 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
+<<<<<<< HEAD
 	while (1) {
+=======
+	int X1;
+	int Y1;
+	int deadZone = 10;
+
+
+	while (1) {
+
+		if (abs(joystickGetAnalog(1, 3)) > deadZone) {
+			Y1 = joystickGetAnalog(1, 3);
+		}
+		else {
+			Y1 = 0;
+		}
+
+		if (abs(joystickGetAnalog(1, 2)) > deadZone) {
+			X1 = joystickGetAnalog(1, 2);
+		}
+		else
+		{
+			X1 = 0;
+		}
+
+		motorSet(1,1);
+		motorSet(2,1);
+		motorSet(5,2);
+		motorSet(6,3);
+		motorSet(9,3);
+		motorSet(10,3);
+
+>>>>>>> 37e114cd2c842f7403bafcac2b0a66841b72b96e
 		delay(20);
 	}
 }
