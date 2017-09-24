@@ -109,4 +109,5 @@ int selection = 1;
 void initialize() {
   driveEncLeft = (encoderInit(6, 7, false));
  driveEncRight = (encoderInit(9, 8, false));
+  armEnc = (encoderInit(4, 5, false));
 }

@@ -52,6 +52,10 @@ extern "C" {
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
 void autonomous();
+
+encoder driveEncLeft;
+encoder driveEncRIght;
+encoder armEnc;
 /**
  * Runs pre-initialization code. This function will be started in kernel mode one time while the
  * VEX Cortex is starting up. As the scheduler is still paused, most API functions will fail.

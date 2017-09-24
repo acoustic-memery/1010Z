@@ -25,7 +25,8 @@
  *
  * The autonomous task may exit, unlike operatorControl() which should never exit. If it does
  * so, the robot will await a switch to another mode or disable/enable cycle.
- */#define FOREWARD 1
+ */
+#define FOREWARD 1
 #define BACKWARDS 2
 #define RIGHT 1
 #define LEFT 2
@@ -55,9 +56,18 @@ void motorsStop () {
 
 }
 
+void motorsLiftUp (int power) {
+
+}
+
+void motorsLiftDown (int power) {
+
+}
+
+void motorsLiftStop () {
 
 
-
+}
 
 
 
@@ -90,8 +100,7 @@ void stopEverything() {
     float errTotalLeft; //total accumulated error left and right
 
     int errAccuLeft = 50;
-    int errAccuRight = 50; //total accumulated error left and right if
-less than integral cap
+    int errAccuRight = 50; //total accumulated error left and right if less than integral cap
 
     float gain = 0.25; //motor gain for proportional term
 
@@ -109,8 +118,7 @@ less than integral cap
 
 
     while(((abs(encoderGet(driveEncLeft)) +
-(abs(encoderGet(driveEncRight)))) / 2) < distance) { //while less than
-target distance
+(abs(encoderGet(driveEncRight)))) / 2) < distance) { //while less than target distance
 
 
 
@@ -123,20 +131,17 @@ target distance
 
        if(errLeft < errAccuLeft) {
          errTotalLeft += errLeft;}
-       else {errTotalLeft = 0;} //makes integral term 0 if error is less
-than 50 (this has not been properly tuned)
+       else {errTotalLeft = 0;} //makes integral term 0 if error is less than 50 (this has not been properly tuned)
 
        if(errTotalLeft > integCap) {
          errTotalLeft = 50/INTEGRAL;
        }
 
        if(errTotalRight > integCap) {
-         errTotalRight = 50/INTEGRAL; //if integral term is greater than
-50 (after previous calculation) integral term is incorperated
+         errTotalRight = 50/INTEGRAL; //if integral term is greater than 50 (after previous calculation) integral term is incorperated
        }
 
-//the above part of the function is only for managing when the integral
-is enganged
+//the above part of the function is only for managing when the integral is enganged
 
        propLeft = errLeft * gain;
        propRight = errRight * gain; //calculate proprtional term
@@ -231,5 +236,38 @@ delay(20);
 
 
   }
+
+void liftUp (int height, int speed) {
+  encoderReset(armEnc);
+  encoderGet(armEnc);
+
+  while (abs(encoderGet(armEnc)) < height) {
+    motorsLiftUp(speed);
+    encoderGet(armEnc);
+    delay(20);
+  }
+  if (abs(encoderGet(armEnc)) >= height) {
+    motorsLiftStop();
+  }
+  encoderReset(armEnc)
+}
+
+void liftDown (int amount, int speed) {
+  encoderReset(armEnc);
+  encoderGet(armEnc);
+
+  while (abs(encoderGet(armEnc)) < height) {
+    motorsLiftUp(speed);
+    encoderGet(armEnc);
+    delay(20);
+  }
+  if (abs(encoderGet(armEnc)) >= height) {
+    motorsLiftStop();
+  }
+  encoderReset(armEnc)
+}
+
+
+
 void autonomous() {
 }
