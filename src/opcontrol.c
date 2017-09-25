@@ -30,9 +30,8 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
-
-	while (1) {
-
+	lcdClear(uart1);
+	lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
 	int X1;
 	int Y1;
 	int deadZone = 10;
@@ -47,8 +46,8 @@ void operatorControl() {
 			Y1 = 0;
 		}
 
-		if (abs(joystickGetAnalog(1, 1)) > deadZone) {
-			X1 = joystickGetAnalog(1, 1);
+		if (abs(joystickGetAnalog(1, 2)) > deadZone) {
+			X1 = joystickGetAnalog(1, 2);
 		}
 		else
 		{
@@ -61,8 +60,6 @@ void operatorControl() {
 		motorSet(6,);
 		motorSet(9,);
 		motorSet(10,);
-
-
 
 		delay(20);
 	}

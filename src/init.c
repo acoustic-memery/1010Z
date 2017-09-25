@@ -47,10 +47,6 @@ int selection = 1;
              lcdPrint(uart1, 1, "LOAD: Comp LS");
          } else if (autoId[counter] == 3) {
              lcdPrint(uart1, 1, "LOAD: Comp RS");
-         } else if (autoId[counter] == 4) {
-             lcdPrint(uart1, 1, "LOAD: ");
-         } else if (autoId[counter] == 5) {
-             lcdPrint(uart1, 1, "LOAD: ");
          }
 
 
@@ -73,24 +69,12 @@ int selection = 1;
          lcdClear(uart1);
          lcdPrint(uart1, 1, " confirmed");
                  break;
-             } else if (autoId[counter] == 4) {
-                 program = 4;
-         selection = 2;
-         lcdClear(uart1);
-         lcdPrint(uart1, 1, " confirmed");
-                 break;
-             } else if (autoId[counter] == 5) {
-                 program = 5;
-         selection = 2;
-         lcdClear(uart1);
-         lcdPrint(uart1, 1, " confirmed");
-                 break;
              } else {
                  continue;
              }
          }
 
-         delay(150);
+         delay(120);
      }
 
 /*
@@ -106,7 +90,12 @@ int selection = 1;
  * will not start. An autonomous mode selection menu like the pre_auton() in other environments
  * can be implemented in this task if desired.
  */
-void initialize() {
+void initialize () {
+  TaskHandle lcdTaskHandle = taskCreate(lcdTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
+  analogCalibrate(1);
+  analogCalibrate(2);
+
+
   driveEncLeft = (encoderInit(6, 7, false));
  driveEncRight = (encoderInit(9, 8, false));
   armEnc = (encoderInit(4, 5, false));
