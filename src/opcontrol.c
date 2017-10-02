@@ -29,9 +29,21 @@
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
+void lift (int power) {
+
+}
+
+void mobileLift (int power) {
+
+
+}
+
+void fork (int power) {
+
+}
+
+
 void operatorControl() {
-	lcdClear(uart1);
-	lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
 	int X1;
 	int Y1;
 	int deadZone = 10;
@@ -54,12 +66,9 @@ void operatorControl() {
 			X1 = 0;
 		}
 
-		motorSet(1,);
-		motorSet(2,);
-		motorSet(5,);
-		motorSet(6,);
-		motorSet(9,);
-		motorSet(10,);
+
+
+
 
 		delay(20);
 	}

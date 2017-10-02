@@ -72,10 +72,19 @@ int selection = 1;
              } else {
                  continue;
              }
+              delay(120);
          }
+         if (isAutonomous()){
+         lcdClear(uart1);
+         while (isAutonomous()){
+         lcdPrint(uart1, 1, "Drive Enc Val");
+         lcdPrint(uart1, 2, "Left Side %d", encoderGet(driveEncLeft));
+         delay(20);
+       }
+       }
+       }}
 
-         delay(120);
-     }
+
 
 /*
  * Runs user initialization code. This function will be started in its own task with the default
@@ -98,5 +107,5 @@ void initialize () {
 
   driveEncLeft = (encoderInit(6, 7, false));
  driveEncRight = (encoderInit(9, 8, false));
-  armEnc = (encoderInit(4, 5, false));
+  liftEnc = (encoderInit(4, 5, false));
 }

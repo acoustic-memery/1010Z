@@ -35,13 +35,7 @@
 #define OPEN 1
 #define CLOSED 2
 
-int clawClosed = 500;
 
-int clawOpen = 4000;
-
-int chainForeward = 4000;
-
-int chainBackward = 200;
 
 void motorsForeward (float output) {
 
@@ -63,53 +57,9 @@ void motorsStop () {
 
 }
 
-void motorsLiftUp (int power) {
-
-}
-
-void motorsLiftDown (int power) {
-
-}
-
-void motorsLiftStop () {
-
-
-}
-
-void motorsChainBack () {
-
-
-}
-
-void motorsChainForeward () {
-
-
-}
-
-void motorsChainStop () {
-
-
-}
-
-void motorsClawOpen () {
-
-
-}
-
-void motorsClawClosed () {
-
-
-}
-
-void motorsClawStop () {
-
-
-}
 
 void stopEverything() {
     motorsStop();
-    clawStop();
-    chainStop();
   }
 
   #define INTEGRAL 1
@@ -191,8 +141,7 @@ encTickLastRight = errRight;
 encTickLastLeft = errLeft; //calculate enctick last
 
 outputLeft = propLeft + integLeft + derivLeft;
-outputRight = propRight + integRight + derivRight; //output P + I + D
-for both sides
+outputRight = propRight + integRight + derivRight; //output P + I + D for both sides
 
 if (outputLeft > 127) {
    outputLeft = 127;
@@ -271,95 +220,6 @@ delay(20);
 
   }
 
-void liftUp (int height, int speed) {
-  encoderReset(armEnc);
-  encoderGet(armEnc);
-
-  while (abs(encoderGet(armEnc)) < height) {
-    motorsLiftUp(speed);
-    encoderGet(armEnc);
-    delay(20);
-  }
-  if (abs(encoderGet(armEnc)) >= height) {
-    motorsLiftStop();
-  }
-  encoderReset(armEnc)
-}
-
-void liftDown (int amount, int speed) {
-  encoderReset(armEnc);
-  encoderGet(armEnc);
-
-  while (abs(encoderGet(armEnc)) < height) {
-    motorsLiftUp(speed);
-    encoderGet(armEnc);
-    delay(20);
-  }
-  if (abs(encoderGet(armEnc)) >= height) {
-    motorsLiftStop();
-  }
-  encoderReset(armEnc)
-}
-
-
-
-void claw (int position) {
-
-  if (position = 1) {
-    analogRead(1);
-
-    while (analogRead(1) < clawOpen) {
-      analogRead(1);
-      motorsClawOpen();
-      delay(20);
-    }
-    if (analogRead(1) >= clawOpen) {
-      motorsClawStop();
-    }
-  } // if open
-
-  else if (position = 2) {
-    analogRead(1);
-    while (analogRead(1) > clawClosed) {
-      analogRead(1);
-      motorsClawClosed();
-      delay(20);
-    }
-    if (analogRead(1) <= clawClosed) {
-      motorsClawStop();
-    }
-  } //if closed
-
-}
-
-void chain (int position) {
-
-  if (position = 1) {
-    analogRead(2);
-
-    while (analogRead(2) < chainForeward) {
-      analogRead(2);
-      motorsChainBack()
-      delay(20);
-    }
-    if (analogRead(2) >= chainForeward) {
-      motorsChainStop();
-    }
-  } // if back
-
-  else if (position = 2) {
-    analogRead(2);
-    while (analogRead(2) > chainBackward) {
-      analogRead(2);
-      motorsChainForeward();
-      delay(20);
-    }
-    if (analogRead(2) <= chainBackward) {
-      motorsChainStop();
-    }
-  } //if forewards
-
-}
 
 void skillsAuto () {
 
@@ -372,17 +232,17 @@ void compLeftAuto () {
 
 void compRightAuto () {
 
-  
+
 }
 
 void autonomous() {
-  if (program = 1) {
+  if (program == 1) {
     skillsAuto();
   }
-  else if (program = 2) {
+  else if (program == 2) {
     compLeftAuto();
   }
-  if (program = 3) {
+  else if (program == 3) {
     compRightAuto();
   }
 
